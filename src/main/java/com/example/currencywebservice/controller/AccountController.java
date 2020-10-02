@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/account")
 public class AccountController {
@@ -35,18 +37,15 @@ public class AccountController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Account> updateAccount(@PathVariable Long id, @RequestBody Account account) {
-        Account oldAccount = accountRepository.findByAccountNumber(id);
-        oldAccount.amount = account.amount;
-        oldAccount.currency = account.currency;
-        accountRepository.save(oldAccount);
-        return new ResponseEntity<>(oldAccount, HttpStatus.OK);
+    public ResponseEntity <Account> updateAccount(@PathVariable Long id, @RequestBody Account account) {
+        account.setAccountNumber(id);
+        accountRepository.save(account);
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<Account>> getAccounts() {
-        List<Account> accounts = accountRepository.getAllAccounts();
+        List<Account> accounts = accountRepository.findAll();
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
-
 }
