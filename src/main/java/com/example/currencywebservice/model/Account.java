@@ -9,7 +9,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long accountNumber;
 
-    private enum Currency {
+    public enum Currency {
         DKK,
         EUR
     }
@@ -20,6 +20,11 @@ public class Account {
 
     public Account(long accountNumber, Currency currency, double amount) {
         this.accountNumber = accountNumber;
+        this.currency = currency;
+        this.amount = amount;
+    }
+
+    public Account(Currency currency, double amount) {
         this.currency = currency;
         this.amount = amount;
     }
@@ -50,5 +55,14 @@ public class Account {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountNumber=" + accountNumber +
+                ", currency=" + currency +
+                ", amount=" + amount +
+                '}';
     }
 }
