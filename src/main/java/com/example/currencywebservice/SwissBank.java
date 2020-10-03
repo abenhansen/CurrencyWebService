@@ -138,7 +138,7 @@ public class SwissBank {
 
 
         // Preparing the headers
-        headers.set("MyRESTtest", "REST TEST");
+        headers.set("BankRequest", "Bank Request");
         // Client wants to send request in JSON format
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         // Client expects response in JSON format
