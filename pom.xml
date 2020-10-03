@@ -14,9 +14,6 @@
     <name>CurrencyWebService</name>
     <description>Demo project for Spring Boot</description>
 
-    <properties>
-        <java.version>11</java.version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -69,6 +66,26 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.14.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <schemaLanguage>WSDL</schemaLanguage>
+                    <generatePackage>com.medium.article</generatePackage>
+                    <schemaDirectory>src/main/resources/</schemaDirectory>
+                    <schemaIncludes>
+                        <schemaInclude>*.wsdl</schemaInclude>
+                    </schemaIncludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
