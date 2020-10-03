@@ -4,11 +4,17 @@ import com.example.currencywebservice.model.Account;
 import com.example.currencywebservice.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/account")
@@ -18,9 +24,16 @@ public class AccountController {
     private AccountRepository accountRepository;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Account> findAccount(@PathVariable Long id) throws ResourceNotFoundException {
+    public ResponseEntity<EntityModel<Account>> findAccount(@PathVariable Long id) throws ResourceNotFoundException {
         Account account = accountRepository.findByAccountNumber(id);
-        return new ResponseEntity<>(account, HttpStatus.OK);
+
+        EntityModel<Account> resource = EntityModel.of(account); 						// get the resource
+        WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAccounts()); // get link
+        resource.add(linkTo.withRel("all-accounts"));										// append the link
+
+        Link selfLink = linkTo(methodOn(this.getClass()).findAccount(id)).withSelfRel(); //add also link to self
+        resource.add(selfLink);
+        return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
     @PostMapping

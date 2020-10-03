@@ -57,9 +57,6 @@
   <wsdl:message name="GetCurrencyRatesHttpGetIn">
     <wsdl:part name="RateDate" type="s:string"/>
   </wsdl:message>
-  <wsdl:message name="GetCurrencyRatesHttpGetOut">
-    <wsdl:part name="Body" element="tns:DataSet"/>
-  </wsdl:message>
   <wsdl:message name="GetConversionRateHttpGetIn">
     <wsdl:part name="CurrencyFrom" type="s:string"/>
     <wsdl:part name="CurrencyTo" type="s:string"/>
